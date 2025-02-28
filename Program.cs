@@ -2,6 +2,7 @@ using System.Text;
 using DatingAppAPI.Data;
 using DatingAppAPI.Extensions;
 using DatingAppAPI.Interfaces;
+using DatingAppAPI.Middleware;
 using DatingAppAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
-
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors(
     x=>x.AllowAnyHeader()
     .AllowAnyMethod()

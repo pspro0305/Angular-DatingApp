@@ -5,7 +5,9 @@ namespace DatingAppAPI.DTOs;
 
 public class RegisterDTO
 {
-    [MaxLength(100)]
-    public required string UserName {get;set;}
-    public required string Password {get;set;}
+    [Required]
+    public string UserName {get;set;} = string.Empty;
+    [StringLength(8, MinimumLength = 4)]
+    [Required]
+    public string Password {get;set;}= string.Empty;
 }
