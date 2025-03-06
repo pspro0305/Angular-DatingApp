@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using DatingAppAPI.Data;
 using DatingAppAPI.Extensions;
@@ -38,5 +39,19 @@ app.UseAuthentication();
 app.UseAuthorization();
 // end of note
 app.MapControllers();
-
+//Apply migration and seed user data
+// Note : This needs to be placed here only as it is sequential execution 
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
+{
+var context = services.GetRequiredService<DataContext>();
+await context.Database.MigrateAsync();
+await Seed.SeedUser(context);
+}
+catch(Exception ex)
+{
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex,"An error occured during migration");
+}
 app.Run();
