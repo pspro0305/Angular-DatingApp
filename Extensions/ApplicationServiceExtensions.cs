@@ -1,5 +1,6 @@
 using System;
 using DatingAppAPI.Data;
+using DatingAppAPI.Helpers;
 using DatingAppAPI.Interfaces;
 using DatingAppAPI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,8 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         //Register AutoMapper
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+        services.AddScoped<IPhotoService, PhotoService>();
         return services;
     }
 }
